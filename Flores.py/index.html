@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Para ti</title>
+  <link rel="stylesheet" href="estilo.css" />
+</head>
+<body>
+  <div class="fondo-foto"></div>
+  <div class="destellos" id="destellos"></div>
+
+  <main class="escenario">
+    <!-- Lado izquierdo: Flor Braille rosa -->
+    <div class="flor-wrapper">
+      <pre id="lienzo"></pre>
+    </div>
+
+    <!-- Centro: Carta principal -->
+    <section class="carta">
+      <div class="adorno-superior">✦ ❀ ✦</div>
+      <h2>Para ti</h2>
+      <p>
+        Mi amor, no es mucho pero que sepas que me esforcé para hacerlo.
+      </p>
+      <p>
+        Se que las cosas están difíciles, pero sin duda yo quiero seguir tratando y
+        esperando porque se que hay mucho que dar y cumplir en esta relación.
+      </p>
+      <p>
+        Mi amor dejame acompañarte, se que puedo ayudar. Aunque no sea mucho, hare el
+        intento por sacarte una sonrisa por mas pequeña y fugaz que sea. No sabes como
+        me gustaria que te vieras como yo te veo, talvez el amor no cure la tristeza,
+        pero estoy dispuesta a tratar... Aveces tengo tanto miedo de perderte a causa de
+        tus propias manos, <span class="destacado-rosa">mi amor porfavor sigue intentando, el milagro es solo un dia a la vez. Y el milagro tambien lo causas tú, el milagro eres tú.</span>
+      </p>
+      <p>
+        Amor de mi vida, nunca voy a olvidar todo lo que has hecho por mi, amo cada
+        parte de ti. No puedo evitar llorar al pensar en ti, cuando te toco siento que
+        todo es menos pesado, gracias por ser la calma que necesito y la persona que me
+        da la calidez que tanto deseo.
+      </p>
+      <p class="firma">Con mucho cariño</p>
+    </section>
+
+    <!-- Lado derecho: Segunda carta -->
+    <aside class="nota-derecha">
+      <div class="adorno-superior">✦ · ✦</div>
+      <p>
+        Mi vida, eres la persona más linda que he tenido oportunidad de conocer, no
+        tienes ni idea de lo que significas para mi. Y tal vez nunca lo sepas puesto a
+        que es tanto que no cabe en palabras, eres la persona más fuerte que he
+        conocido y no sabes lo orgullosa que estoy de ti, inclusive por la cosa más
+        pequeña, cualquier cosa que logres para mi lo es todo. Por favor nunca dejes
+        de esforzarte, dejame ser ese empujoncito que necesitas y dejame apoyarte en
+        todo lo que me sea posible, sabes que siempre vas a contar conmigo para todo,
+        incluso si la relacion termina.
+      </p>
+      <p>
+        Mi amor te amo tanto, te amo en cada dia, cada tristeza, cada fristracion.
+      </p>
+      <p class="destacado-rosa">
+        Creo que es lo más hermoso que puedo experimentar en la vida<br />
+        El amarte como te amo<br />
+        Te amo en el agua, en lo más profundo, en el faro a medianoche<br />
+        Te amo tanto, te amo tanto, te amo tanto<br />
+        Te amo tanto, te amo tanto, te amo tanto<br />
+        Te amo tanto, te amo tanto, te amo tanto.
+      </p>
+    </aside>
+  </main>
+
+  <script>
+    const florTexto = `⠀⠀⠀⠀⠀⣠⣤⡦⣤⣬⣍⡉⠒⢤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⣠⠒⠉⠁⠀⠀⠀⠀⠈⠙⠻⣦⣜⠳⣄⢀⣀⣀⣠⣄⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⡜⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢈⢿⡖⠛⣯⠀⠀⣀⣀⣀⣀⣀⡀⠈⠉⠓⠒⠠⠤⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⣯⠙⣦⠀
+⣼⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠞⠃⣤⣽⣶⠾⣿⠉⠉⠉⠉⠉⠉⠙⠓⢤⡀⠀⠀⠀⠉⠙⠒⠶⢤⣤⣀⡀⠀⠀⠀⠀⠨⠍⢀⡾⠃
+⢿⠀⠀⠀⠀⠀⠀⠀⠀⠀⡠⠊⣠⣶⣿⠋⠉⣏⠀⢹⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠣⡀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠛⠓⠲⠖⠚⠉⠀⠀
+⠘⣆⢀⣤⡀⠀⠀⠀⡼⢥⣶⠿⠙⠀⠀⠀⡇⠀⢸⡇⠀⠀⠀⠀⢠⣦⣤⠀⠀⠀⢹⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠈⠻⣿⡟⠀⠀⣾⣽⡿⠏⠁⠀⠀⠀⡸⠁⠀⣾⠀⠀⠀⠀⠀⢯⠙⠃⠀⠀⠀⣸⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⣑⣿⡟⠃⠀⠀⠀⠀⡴⠁⠀⣰⠏⠃⠀⠀⠀⠀⠘⢦⣄⣀⣠⡴⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⢀⠀⢀⣾⠟⠐⢲⡷⠶⢶⡞⠁⠀⣴⠟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⢰⢿⡿⣾⡏⠀⠀⠀⠁⢰⠏⠀⢀⡾⡉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠸⣌⢠⡿⠄⠀⢀⣠⡶⠁⠀⡰⠏⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠈⣿⡟⠛⠋⢡⠞⠀⣠⠞⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⢀⢠⡟⠀⠀⢠⠃⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⡎⢸⠇⠀⠀⡏⠀⠀⠀⠀⣴⣗⠲⢤⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⢀⡇⣼⠀⠀⢸⡇⠀⠀⠀⠈⠛⠿⠃⠘⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠘⡇⣧⠀⠀⠀⢷⡀⠀⠀⠀⠀⠀⠀⢀⡼⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⡇⢸⠀⠀⠀⠈⠻⢶⣤⣤⣤⠶⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⢃⠸⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⢸⠀⢧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠸⡄⠘⣆⠀⠀⣰⣦⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⢧⠀⠉⠳⢤⣽⡿⠙⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⢀⠸⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠸⡆⢳⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⢸⡘⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⢧⢸⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠸⡄⢿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⢇⠘⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⢸⠀⢹⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠸⡄⠀⢷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⣠⡀⠈⡇⠀⢸⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⢸⢿⠇⠀⡇⠀⣸⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠸⣄⣀⢰⣧⣴⡿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠈⠙⢻⣿⠟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⣼⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⢀⡿⠤⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⢀⣠⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⢸⠿⠁⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⢰⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⡿⠐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⢸⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⡞⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠰⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⢫⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠘⡄⠀⠀⢀⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠘⠢⣀⣘⣿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`;
+
+    const lienzo = document.getElementById("lienzo");
+    const lineasFlor = florTexto.split("\n");
+    let indice = 0;
+
+    function escribirFlor() {
+      if (!lienzo) return;
+      if (indice < lineasFlor.length) {
+        lienzo.textContent += lineasFlor[indice] + "\n";
+        indice++;
+        setTimeout(escribirFlor, 25);
+      }
+    }
+
+    escribirFlor();
+
+    // Destellos suaves en el fondo
+    const contenedorDestellos = document.getElementById("destellos");
+    const coloresDestello = ["#ff8ad4", "#ffd43b", "#ffd6e7"];
+    const totalDestellos = 18;
+
+    for (let i = 0; i < totalDestellos; i++) {
+      const punto = document.createElement("span");
+      punto.className = "destello";
+      const tamano = 3 + (i % 4) * 1.5;
+      punto.style.width = tamano + "px";
+      punto.style.height = tamano + "px";
+      punto.style.left = ((i * 5.7) % 98) + "%";
+      punto.style.backgroundColor = coloresDestello[i % coloresDestello.length];
+      punto.style.boxShadow = "0 0 8px " + coloresDestello[i % coloresDestello.length];
+      punto.style.animationDuration = (9 + (i % 6) * 2.2) + "s";
+      punto.style.animationDelay = (-1 * ((i * 1.7) % 12)) + "s";
+      contenedorDestellos.appendChild(punto);
+    }
+  </script>
+</body>
+</html>
